@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 // Add the Firebase products that you want to use
 import 'firebase/auth';
 import 'firebase/firestore';
+import {LOCAL_STORAGE_KEYS} from "@shared/auth/constants/storage.constants";
 
 class FirebaseAuthBackend {
     constructor(firebaseConfig) {
@@ -10,9 +11,9 @@ class FirebaseAuthBackend {
             firebase.initializeApp(firebaseConfig);
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
-                    sessionStorage.setItem('authUser', JSON.stringify(user));
+                    sessionStorage.setItem(LOCAL_STORAGE_KEYS.PROFILE, JSON.stringify(user));
                 } else {
-                    sessionStorage.removeItem('authUser');
+                    sessionStorage.removeItem(LOCAL_STORAGE_KEYS.PROFILE);
                 }
             });
         }
@@ -75,17 +76,17 @@ class FirebaseAuthBackend {
     }
 
     setLoggeedInUser = (user) => {
-        sessionStorage.setItem('authUser', JSON.stringify(user));
+        sessionStorage.setItem(LOCAL_STORAGE_KEYS.PROFILE, JSON.stringify(user));
     }
 
     /**
      * Returns the authenticated user
      */
     getAuthenticatedUser = () => {
-        if (!sessionStorage.getItem('authUser')) {
+        if (!sessionStorage.getItem(LOCAL_STORAGE_KEYS.PROFILE)) {
             return null;
         }
-        return JSON.parse(sessionStorage.getItem('authUser'));
+        return JSON.parse(sessionStorage.getItem(LOCAL_STORAGE_KEYS.PROFILE));
     }
 
     /**
