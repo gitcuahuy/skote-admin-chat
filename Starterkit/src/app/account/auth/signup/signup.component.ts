@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment';
-import { first } from 'rxjs/operators';
-import { UserProfileService } from '../../../core/services/user.service';
+import {AuthenticationService} from '../../../core/services/auth.service';
+import {environment} from '../../../../environments/environment';
+import {first} from 'rxjs/operators';
+import {UserProfileService} from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -24,7 +24,8 @@ export class SignupComponent implements OnInit {
 
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private userService: UserProfileService) { }
+              private userService: UserProfileService) {
+  }
 
   ngOnInit() {
     this.signupForm = this.formBuilder.group({
@@ -35,7 +36,9 @@ export class SignupComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.signupForm.controls; }
+  get f() {
+    return this.signupForm.controls;
+  }
 
   /**
    * On submit form
@@ -48,15 +51,19 @@ export class SignupComponent implements OnInit {
       return;
     } else {
       if (environment.defaultauth === 'firebase') {
-        this.authenticationService.register(this.f.email.value, this.f.password.value).then((res: any) => {
+        this.authenticationService.register({
+          username: this.f.email.value,
+          password: this.f.password.value,
+          signUpType: 'email',
+          fullName: this.f.username.value,
+        }).subscribe(() => {
           this.successmsg = true;
           if (this.successmsg) {
             this.router.navigate(['/dashboard']);
           }
+        }, error => {
+          this.error = error ? error : '';
         })
-          .catch(error => {
-            this.error = error ? error : '';
-          });
       } else {
         this.userService.register(this.signupForm.value)
           .pipe(first())

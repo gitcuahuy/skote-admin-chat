@@ -1,6 +1,7 @@
 import {BaseCredential} from "@shared/auth/model/base-cridential.model";
 import {AuthedResponse} from "@shared/auth/model/authedResponse";
 import {AuditableModel} from "@shared/auth/model/auditable.model";
+import {IUser} from "@core/models/auth.models";
 
 export interface IPermission {
   roleId?: string;
@@ -63,6 +64,3 @@ export enum AccountType {
   CUSTOMER = 'CUSTOMER',
 }
 
-// export interface ILoginResponse extends AuthedResponse, IUser {
-//
-// }

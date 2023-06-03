@@ -3,8 +3,10 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment';
+import { AuthenticationService } from '@core/services/auth.service';
+import { environment } from '@environment/environment';
+import {catchError} from "rxjs/operators";
+import {throwError} from "rxjs";
 
 @Component({
   selector: 'app-recoverpwd2',
@@ -45,10 +47,11 @@ export class Recoverpwd2Component implements OnInit {
       return;
     }
     if (environment.defaultauth === 'firebase') {
-      this.authenticationService.resetPassword(this.f.email.value)
-        .catch(error => {
-          this.error = error ? error : '';
-        });
+      this.authenticationService.initForgotPassword(this.f.email.value).pipe(catchError(err => {
+        this.error = err ? err : '';
+        this.loading = false;
+        return throwError(err);
+      })).subscribe()
     }
   }
 

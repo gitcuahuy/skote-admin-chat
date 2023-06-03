@@ -71,12 +71,15 @@ export class Login2Component implements OnInit {
       return;
     } else {
       if (environment.defaultauth === 'firebase') {
-        this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
+        this.authenticationService.loginUserName({
+          username: this.f.email.value,
+          password: this.f.password.value,
+          isRememberMe: true
+        }).subscribe(() => {
           this.router.navigate(['/dashboard']);
-        })
-          .catch(error => {
-            this.error = error ? error : '';
-          });
+        }, (error) => {
+          this.error = error ? error : '';
+        });
       } else {
         this.authFackservice.login(this.f.email.value, this.f.password.value)
           .pipe(first())
