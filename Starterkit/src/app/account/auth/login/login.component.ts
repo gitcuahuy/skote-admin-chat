@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
+import {AuthenticationService} from '@core/services/auth.service';
+import {AuthfakeauthenticationService} from '@core/services/authfake.service';
 
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {first} from 'rxjs/operators';
 
-import { environment } from '../../../../environments/environment';
+import {environment} from '@environment/environment';
 
 @Component({
   selector: 'app-login',
@@ -29,8 +29,12 @@ export class LoginComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService) { }
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
+              private authFackservice: AuthfakeauthenticationService) {
+  }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -46,7 +50,9 @@ export class LoginComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   /**
    * Form submit
