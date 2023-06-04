@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
         }).subscribe(() => {
           this.successmsg = true;
           if (this.successmsg) {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/account/auth/verification']);
           }
         }, error => {
           this.error = error ? error : '';
@@ -85,7 +85,7 @@ export class SignupComponent implements OnInit {
             data => {
               this.successmsg = true;
               if (this.successmsg) {
-                this.router.navigate(['/account/login']);
+                this.router.navigate(['account/auth/verification']);
               }
             },
             error => {

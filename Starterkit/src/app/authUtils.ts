@@ -85,6 +85,13 @@ class FirebaseAuthBackend {
     return fromPromise(firebase.auth().signOut());
   }
 
+  verifyAccount = (code: string) => {
+    return fromPromise(firebase.auth().applyActionCode(code));
+  }
+
+  sendEmailVerification = () => {
+    return fromPromise(firebase.auth().currentUser.sendEmailVerification());
+  }
   clearAuthData(): void {
     CommonUtils.clearItem(LOCAL_STORAGE_KEYS.PROFILE);
     CommonUtils.clearItem(LOCAL_STORAGE_KEYS.TOKEN);

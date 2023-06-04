@@ -146,7 +146,13 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
         }
       ));
   }
+  sendVerifyEmail(): Observable<void> {
+    return getFirebaseBackend().sendEmailVerification();
+  }
 
+  verifyAccount(code: string): Observable<void> {
+    return getFirebaseBackend().verifyAccount(code);
+  }
   /**
    * Performs the register
    * @param loginRequest RegisterUserRequest
