@@ -2,11 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AuthenticationService} from '../../../core/services/auth.service';
-import {environment} from '../../../../environments/environment';
+import {AuthenticationService} from '@core/services/auth.service';
+import {environment} from '@environment/environment';
 import {first} from 'rxjs/operators';
-import {UserProfileService} from '../../../core/services/user.service';
-
+import {UserProfileService} from '@core/services/user.service';
+const FORM_FIELDS = {
+  username: 'username',
+  fullName: 'fullName',
+  email: 'email',
+  password: 'password',
+}
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -23,7 +28,10 @@ export class SignupComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private authenticationService: AuthenticationService,
               private userService: UserProfileService) {
   }
 
