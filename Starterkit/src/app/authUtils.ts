@@ -36,6 +36,7 @@ class FirebaseAuthBackend {
     return fromPromise(firebase.auth().createUserWithEmailAndPassword(loginRequest.username, loginRequest.password))
       .pipe(
         catchError((error) => {
+          console.log('error', error);
           return throwError(error.message);
         })
       );

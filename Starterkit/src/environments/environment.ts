@@ -5,7 +5,7 @@
 export const environment = {
 
   production: false,
-  defaultauth: 'fackbackend',
+  defaultauth: 'firebase',
   firebaseConfig: {
     apiKey: 'AIzaSyBbGNe_sYx8N09SWbcOfCmLNVfkWvQ4Jbg',
     authDomain: 'me-chat-a2693.firebaseapp.com',

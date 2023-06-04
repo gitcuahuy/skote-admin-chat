@@ -4,14 +4,15 @@ import {getFirebaseBackend, RegisterUserRequest} from '../../authUtils';
 
 import {ILoginResponse, IUser, User} from '../models/auth.models';
 import {BaseAuthService, IAuthService} from "@shared/auth/constants/base-auth.service";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {AuthedResponse} from "@shared/auth/model/authedResponse";
 import {UserLevel} from "@shared/auth/model/user/user.model";
-import {map, switchMap} from "rxjs/operators";
+import {catchError, map, switchMap} from "rxjs/operators";
 import firebase from "firebase";
 import {fromPromise} from "rxjs/internal-compatibility";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
+import CommonUtils from "@shared/utils/CommonUtils";
 
 @Injectable({providedIn: 'root'})
 
@@ -104,13 +105,13 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
           return fromPromise(firebase.firestore().doc(loginResponse.user?.uid).get({source: 'default'})).pipe(
             map((user) => {
               if (!user.exists) {
-                user.ref.set({
+                user.ref.set(CommonUtils.optimalObjectParams({
                   username: loginResponse.user?.email ?? "",
                   avatarUrl: loginResponse.user?.photoURL ?? "",
                   emailVerified: loginResponse.user?.emailVerified ?? false,
                   fullName: loginResponse.user?.displayName ?? "",
                   deleted: false,
-                })
+                }));
               }
               // const userData = user.data();
               const response: ILoginResponse = {
@@ -152,6 +153,9 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
    */
   register(loginRequest: RegisterUserRequest): Observable<IUser> {
     return getFirebaseBackend().registerUser(loginRequest).pipe(
+      catchError(err => {
+        return throwError(err);
+      }),
       switchMap((userCredential: firebase.auth.UserCredential) => {
         const id = userCredential.user?.uid;
         const user: IUser = {
@@ -164,9 +168,13 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
           id: id,
           deleted: false,
         }
-        return fromPromise(firebase.firestore().collection(FIRE_COLLECTION.users).doc(id).set(user)).map(() => {
-          return user;
-        })
+        return fromPromise(firebase.firestore()
+          .collection(FIRE_COLLECTION.users).doc(id)
+          .set(CommonUtils.optimalObjectParams(user)))
+          .pipe(map(() => {
+            console.log('userCreated', user);
+            return user;
+          }));
       })
     );
   }
