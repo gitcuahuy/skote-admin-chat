@@ -11,6 +11,7 @@ import {map, switchMap} from "rxjs/operators";
 import firebase from "firebase";
 import {fromPromise} from "rxjs/internal-compatibility";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 @Injectable({providedIn: 'root'})
 
@@ -23,7 +24,19 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
   }
 
   loginOauth(code: string, PARTNER_ID: string): Observable<AuthedResponse> {
-    throw new Error('Method not implemented.');
+    const authProvider = new GoogleAuthProvider();
+    authProvider.setCustomParameters({
+      prompt: "select_account"
+    });
+    return getFirebaseBackend().oauthLogin(authProvider).pipe(map(user => {
+      return {
+        accessToken: '',
+        refreshToken: user.user.refreshToken,
+        userId: user.user.uid,
+        signInMethod: user.credential.signInMethod,
+        providerId: user.credential.providerId,
+      }
+    }))
   }
 
   initForgotPassword(identifyId: string): Observable<boolean> {
@@ -83,12 +96,54 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
    * Performs the auth
    * @param data
    */
-  // login(email: string, password: string): Observable<IUser> {
-  //   return getFirebaseBackend().loginUser(email, password)
-  // }
 
   loginUserName(data: { username: string; password: string; isRememberMe: boolean }): Observable<AuthedResponse> {
-    return getFirebaseBackend().loginUser(data.username, data.password)
+    return getFirebaseBackend().loginUser(data.username, data.password).pipe(
+      switchMap(
+        loginResponse => {
+          return fromPromise(firebase.firestore().doc(loginResponse.user?.uid).get({source: 'default'})).pipe(
+            map((user) => {
+              if (!user.exists) {
+                user.ref.set({
+                  username: loginResponse.user?.email ?? "",
+                  avatarUrl: loginResponse.user?.photoURL ?? "",
+                  emailVerified: loginResponse.user?.emailVerified ?? false,
+                  fullName: loginResponse.user?.displayName ?? "",
+                  deleted: false,
+                })
+              }
+              // const userData = user.data();
+              const response: ILoginResponse = {
+                refreshToken: loginResponse.user?.refreshToken ?? "",
+                accessToken: "",
+
+                // fullName: userData?.fullName,
+                // avatarUrl: userData?.avatarUrl ?? loginResponse.user?.photoURL,
+                // id: loginResponse.user?.uid,
+                // description: userData?.description,
+                // gender: userData?.gender,
+                // username: userData?.username,
+                // status: userData?.status,
+                // dayOfBirth: userData?.dayOfBirth,
+                // accountType: userData?.accountType,
+                // departmentName: userData?.departmentName,
+                // address: userData?.address,
+                // userLevel: userData?.userLevel,
+                // avatarFileId: userData?.avatarFileId,
+                // lastLoginAt: userData?.lastLoginAt,
+                // title: userData?.title,
+                // emailVerified: userData?.emailVerified,
+                // background: userData?.background,
+                // userPrimary: userData?.userPrimary,
+                // deleted: userData?.deleted,
+              }
+              user.ref.update({lastLoginAt: new Date()});
+              // this.user = response;
+              return response;
+            })
+          )
+        }
+      ));
   }
 
   /**
@@ -121,12 +176,6 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
    * @param token
    * @param password
    */
-  // resetPassword(email: string) {
-  //   return getFirebaseBackend().forgetPassword(email).then((response: any) => {
-  //     const message = response.data;
-  //     return message;
-  //   });
-  // }
   resetPassword(token: string, password: string): Observable<boolean> {
     return getFirebaseBackend().confirmResetPassword(token, password).pipe(map((response: any) => {
       return true

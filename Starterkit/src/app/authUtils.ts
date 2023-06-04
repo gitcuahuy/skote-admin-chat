@@ -32,20 +32,6 @@ class FirebaseAuthBackend {
     }
   }
 
-  /**
-   * Registers the user with given details
-   */
-  // registerUser = (email, password) => {
-  //   return new Promise((resolve, reject) => {
-  //     firebase.auth().createUserWithEmailAndPassword(email, password).then((user: any) => {
-  //       var user: any = firebase.auth().currentUser;
-  //       resolve(user);
-  //     }, (error) => {
-  //       reject(this._handleError(error));
-  //     });
-  //   });
-  // }
-
   registerUser(loginRequest: RegisterUserRequest): Observable<firebase.auth.UserCredential> {
     return fromPromise(firebase.auth().createUserWithEmailAndPassword(loginRequest.username, loginRequest.password))
       .pipe(
@@ -58,67 +44,17 @@ class FirebaseAuthBackend {
   /**
    * Login user with given details
    */
-  loginUser(email: string, password: string): Observable<ILoginResponse> {
-    return fromPromise(firebase.auth().signInWithEmailAndPassword(email, password)).pipe(
-      switchMap(
-        loginResponse => {
-          return fromPromise(firebase.firestore().doc(loginResponse.user?.uid).get({source: 'default'})).pipe(
-            map((user) => {
-              if (!user.exists) {
-                user.ref.set({
-                  username: loginResponse.user?.email ?? "",
-                  avatarUrl: loginResponse.user?.photoURL ?? "",
-                  emailVerified: loginResponse.user?.emailVerified ?? false,
-                  fullName: loginResponse.user?.displayName ?? "",
-                  deleted: false,
-                })
-              }
-              // const userData = user.data();
-              const response: ILoginResponse = {
-                refreshToken: loginResponse.user?.refreshToken ?? "",
-                accessToken: "",
-
-                // fullName: userData?.fullName,
-                // avatarUrl: userData?.avatarUrl ?? loginResponse.user?.photoURL,
-                // id: loginResponse.user?.uid,
-                // description: userData?.description,
-                // gender: userData?.gender,
-                // username: userData?.username,
-                // status: userData?.status,
-                // dayOfBirth: userData?.dayOfBirth,
-                // accountType: userData?.accountType,
-                // departmentName: userData?.departmentName,
-                // address: userData?.address,
-                // userLevel: userData?.userLevel,
-                // avatarFileId: userData?.avatarFileId,
-                // lastLoginAt: userData?.lastLoginAt,
-                // title: userData?.title,
-                // emailVerified: userData?.emailVerified,
-                // background: userData?.background,
-                // userPrimary: userData?.userPrimary,
-                // deleted: userData?.deleted,
-              }
-              user.ref.update({lastLoginAt: new Date()});
-              // this.user = response;
-              return response;
-            })
-          )
-        }
-      ));
+  loginUser(email: string, password: string): Observable<firebase.auth.UserCredential> {
+    return fromPromise(firebase.auth().signInWithEmailAndPassword(email, password));
   }
 
+  oauthLogin = (provider: firebase.auth.AuthProvider): Observable<firebase.auth.UserCredential> => {
+    return  fromPromise(firebase.auth().signInWithPopup(provider))
+  }
   /**
    * forget Password user with given details
    */
   forgetPassword = (email: string) => {
-    // return new Promise((resolve, reject) => {
-    //   // tslint:disable-next-line: max-line-length
-    //   firebase.auth().sendPasswordResetEmail(email, {url: window.location.protocol + '//' + window.location.host + '/login'}).then(() => {
-    //     resolve(true);
-    //   }).catch((error) => {
-    //     reject(this._handleError(error));
-    //   });
-    // });
     return fromPromise(firebase.auth()
       .sendPasswordResetEmail(email,
         {url: window.location.protocol + '//' + window.location.host + '/login'})).pipe(map(() => {
