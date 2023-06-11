@@ -3,27 +3,27 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbNavModule, NgbDropdownModule, NgbModalModule, NgbTooltipModule , NgbCollapseModule} from '@ng-bootstrap/ng-bootstrap';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { SimplebarAngularModule } from 'simplebar-angular';
-import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
-import interactionPlugin from '@fullcalendar/interaction'; // a plugin
-import bootstrapPlugin from "@fullcalendar/bootstrap";
+// import { NgApexchartsModule } from 'ng-apexcharts';
+// import { FullCalendarModule } from '@fullcalendar/angular';
+// import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+// import interactionPlugin from '@fullcalendar/interaction'; // a plugin
+// import bootstrapPlugin from "@fullcalendar/bootstrap";
 import { LightboxModule } from 'ngx-lightbox';
 
-import { WidgetModule } from '../shared/widget/widget.module';
-import { UIModule } from '../shared/ui/ui.module';
+import { WidgetModule } from '@shared/widget/widget.module';
+import { UIModule } from '@shared/ui/ui.module';
 
 import { PagesRoutingModule } from './pages-routing.module';
 
 import { DashboardsModule } from './dashboards/dashboards.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SimplebarAngularModule } from 'simplebar-angular';
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
-  dayGridPlugin,
-  interactionPlugin,
-  bootstrapPlugin
-]);
+// FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+//   dayGridPlugin,
+//   interactionPlugin,
+//   bootstrapPlugin
+// ]);
 
 @NgModule({
   declarations: [],
@@ -33,13 +33,13 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     NgbDropdownModule,
     NgbModalModule,
     PagesRoutingModule,
-    NgApexchartsModule,
+    // NgApexchartsModule,
     ReactiveFormsModule,
     DashboardsModule,
     HttpClientModule,
     UIModule,
     WidgetModule,
-    FullCalendarModule,
+    // FullCalendarModule,
     NgbNavModule,
     NgbTooltipModule,
     NgbCollapseModule,

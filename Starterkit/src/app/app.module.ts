@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
-import { environment } from '../environments/environment';
+import { environment } from '@environment/environment';
 
 import { NgbNavModule, NgbAccordionModule, NgbTooltipModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -17,9 +17,9 @@ import { AppComponent } from './app.component';
 import { initFirebaseBackend } from './authUtils';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ErrorInterceptor } from './core/helpers/error.interceptor';
-import { JwtInterceptor } from './core/helpers/jwt.interceptor';
-import { FakeBackendInterceptor } from './core/helpers/fake-backend';
+import { ErrorInterceptor } from '@core/helpers/error.interceptor';
+import { JwtInterceptor } from '@core/helpers/jwt.interceptor';
+import { FakeBackendInterceptor } from '@core/helpers/fake-backend';
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);

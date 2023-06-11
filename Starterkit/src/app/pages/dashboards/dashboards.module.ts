@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DashboardsRoutingModule } from './dashboards-routing.module';
-import { UIModule } from '../../shared/ui/ui.module';
-import { WidgetModule } from '../../shared/widget/widget.module';
+import { UIModule } from '@shared/ui/ui.module';
+import { WidgetModule } from '@shared/widget/widget.module';
 
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
-import { SimplebarAngularModule } from 'simplebar-angular';
+// import { NgApexchartsModule } from 'ng-apexcharts';
+// import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
+// import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { DefaultComponent } from './default/default.component';
+import {NgbDropdownModule, NgbNavModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [DefaultComponent],
@@ -24,8 +25,8 @@ import { DefaultComponent } from './default/default.component';
     NgbTooltipModule,
     NgbNavModule,
     WidgetModule,
-    NgApexchartsModule,
-    SimplebarAngularModule
+    // NgApexchartsModule,
+    // SimplebarAngularModule
   ]
 })
 export class DashboardsModule { }

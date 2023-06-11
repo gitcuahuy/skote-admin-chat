@@ -1,14 +1,10 @@
-import firebase from 'firebase/app';
 // Add the Firebase products that you want to use
-import 'firebase/auth';
-import 'firebase/firestore';
 import {LOCAL_STORAGE_KEYS} from "@shared/auth/constants/storage.constants";
 import {Observable, throwError} from "rxjs";
 import {fromPromise} from "rxjs/internal-compatibility";
-import {catchError, map, switchMap} from "rxjs/operators";
-import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
-import {ILoginResponse, IUser} from '@core/models/auth.models';
+import {catchError, map} from "rxjs/operators";
 import CommonUtils from "@shared/utils/CommonUtils";
+import firebase from "firebase";
 
 export interface RegisterUserRequest {
   username: string;

@@ -8,11 +8,11 @@ import {Observable, throwError} from "rxjs";
 import {AuthedResponse} from "@shared/auth/model/authedResponse";
 import {UserLevel} from "@shared/auth/model/user/user.model";
 import {catchError, map, switchMap} from "rxjs/operators";
-import firebase from "firebase";
 import {fromPromise} from "rxjs/internal-compatibility";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import CommonUtils from "@shared/utils/CommonUtils";
+import firebase from "firebase";
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 @Injectable({providedIn: 'root'})
 
