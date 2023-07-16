@@ -54,7 +54,7 @@ class FirebaseAuthBackend {
   forgetPassword = (email: string) => {
     return fromPromise(firebase.auth()
       .sendPasswordResetEmail(email,
-        {url: window.location.protocol + '//' + window.location.host + '/login'})).pipe(map(() => {
+        {url: window.location.protocol + '//' + window.location.host + '/account/login'})).pipe(map(() => {
       return true;
     }));
   };

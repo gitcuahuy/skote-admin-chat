@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../../core/services/auth.service';
 import {environment} from '../../../../environments/environment';
 import {catchError} from "rxjs/operators";
 import {throwError} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-passwordreset',
@@ -28,7 +29,11 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
   year: number = new Date().getFullYear();
 
   // tslint:disable-next-line: max-line-length
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private toastService: ToastrService,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -63,7 +68,11 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
           this.error = err ? err : '';
           return throwError(err);
         }
-      )).subscribe();
+      )).subscribe(
+        () => {
+
+        }
+      );
     }
   }
 }
