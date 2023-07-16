@@ -21,7 +21,8 @@ import {ErrorInterceptor} from '@core/helpers/error.interceptor';
 import {JwtInterceptor} from '@core/helpers/jwt.interceptor';
 import {FakeBackendInterceptor} from '@core/helpers/fake-backend';
 import {AvatarModule} from "ngx-avatar";
-import {TOAST_CONFIG, ToastContainerModule, ToastrModule} from "ngx-toastr";
+import {FormsModule} from "@angular/forms";
+import {ToastrModule} from "ngx-toastr";
 // import {ToastrModule} from "ngx-toastr";
 
 if (environment.defaultauth === 'firebase') {
@@ -34,7 +35,9 @@ if (environment.defaultauth === 'firebase') {
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
+
 const avatarColors = ["#FFB6C1", "#2c3e50", "#95a5a6", "#f39c12", "#1abc9c"];
+
 @NgModule({
   declarations: [
     AppComponent
@@ -62,12 +65,16 @@ const avatarColors = ["#FFB6C1", "#2c3e50", "#95a5a6", "#f39c12", "#1abc9c"];
     AvatarModule.forRoot({
       colors: avatarColors
     }),
+    BrowserModule,
+    FormsModule,
+    ToastrModule.forRoot({timeOut: 10000}), // ToastrModule added
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true},
   ],
 })
-export class AppModule { }
+export class AppModule {
+}

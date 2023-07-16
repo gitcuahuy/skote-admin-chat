@@ -1,17 +1,17 @@
-import { Component, OnInit, AfterViewInit, Inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { LanguageService } from '../../core/services/language.service';
+import {Component, OnInit, AfterViewInit, Inject} from '@angular/core';
+import {Router, NavigationEnd} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
+import {LanguageService} from '../../core/services/language.service';
 
-import { EventService } from '../../core/services/event.service';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
+import {EventService} from '../../core/services/event.service';
+import {AuthenticationService} from '../../core/services/auth.service';
+import {AuthfakeauthenticationService} from '../../core/services/authfake.service';
 
-import { DOCUMENT } from '@angular/common';
+import {DOCUMENT} from '@angular/common';
 
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
-import { environment } from '../../../environments/environment';
+import {MENU} from './menu';
+import {MenuItem} from './menu.model';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-horizontaltopbar',
@@ -33,19 +33,21 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
   menuItems = [];
 
   listLang = [
-    { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
-    { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
-    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
-    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
-    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
+    {text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en'},
+    {text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es'},
+    {text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de'},
+    {text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it'},
+    {text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru'},
   ];
 
   // tslint:disable-next-line: max-line-length
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private eventService: EventService, private authService: AuthenticationService,
-    private authFackservice: AuthfakeauthenticationService,
-    public languageService: LanguageService,
-    // tslint:disable-next-line: variable-name
-    public _cookiesService: CookieService) {
+  constructor(@Inject(DOCUMENT) private document: any,
+              private router: Router, private eventService: EventService,
+              private authService: AuthenticationService,
+              private authFackservice: AuthfakeauthenticationService,
+              public languageService: LanguageService,
+              // tslint:disable-next-line: variable-name
+              public _cookiesService: CookieService) {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.activateMenu();
@@ -62,7 +64,9 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {
-      if (this.flagvalue === undefined) { this.valueset = 'assets/images/flags/us.jpg'; }
+      if (this.flagvalue === undefined) {
+        this.valueset = 'assets/images/flags/us.jpg';
+      }
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
@@ -80,11 +84,13 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
    */
   logout() {
     if (environment.defaultauth === 'firebase') {
-      this.authService.logout();
+      this.authService.logout().subscribe(() => {
+        this.router.navigate(['/account/login']);
+      });
     } else {
       this.authFackservice.logout();
     }
-    this.router.navigate(['/account/login']);
+
   }
 
   /**

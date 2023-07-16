@@ -7,7 +7,7 @@ import {BaseAuthService, IAuthService} from "@shared/auth/constants/base-auth.se
 import {Observable, throwError} from "rxjs";
 import {AuthedResponse} from "@shared/auth/model/authedResponse";
 import {UserLevel} from "@shared/auth/model/user/user.model";
-import {catchError, map, switchMap} from "rxjs/operators";
+import {catchError, map, switchMap, tap} from "rxjs/operators";
 import {fromPromise} from "rxjs/internal-compatibility";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
 import CommonUtils from "@shared/utils/CommonUtils";
@@ -220,6 +220,7 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
    * Logout the user
    */
   logout(): Observable<void> {
+    this.user = null;
     return getFirebaseBackend().logout();
   }
 }

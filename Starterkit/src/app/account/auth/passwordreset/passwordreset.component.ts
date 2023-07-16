@@ -2,11 +2,11 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {AuthenticationService} from '../../../core/services/auth.service';
-import {environment} from '../../../../environments/environment';
+import {AuthenticationService} from '@core/services/auth.service';
+import {environment} from '@environment/environment';
 import {catchError} from "rxjs/operators";
 import {throwError} from "rxjs";
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-passwordreset',
@@ -66,11 +66,14 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
       this.authenticationService.initForgotPassword(this.f.email.value).pipe(catchError(
         (err) => {
           this.error = err ? err : '';
+          this.toastService.error(this.error, 'Error');
           return throwError(err);
         }
       )).subscribe(
         () => {
-
+          this.success = 'Reset password link sent to your email.';
+          this.toastService.success(this.success, 'Success');
+          this.router.navigate(['/account/login']);
         }
       );
     }
