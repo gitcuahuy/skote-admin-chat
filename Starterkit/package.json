@@ -41,6 +41,7 @@
     "ng-click-outside": "^8.0.0",
     "ng-otp-input": "^1.7.1",
     "ng5-slider": "^1.2.6",
+    "ngx-avatar": "^4.1.0",
     "ngx-color-picker": "^11.0.0",
     "ngx-cookie-service": "13.1.2",
     "ngx-drag-drop": "^2.0.0",

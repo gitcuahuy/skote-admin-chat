@@ -1,12 +1,14 @@
-import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
-import { AuthenticationService } from '../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
-import { environment } from '../../../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
-import { LanguageService } from '../../core/services/language.service';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
+import {DOCUMENT} from '@angular/common';
+import {AuthenticationService} from '@core/services/auth.service';
+import {AuthfakeauthenticationService} from '@core/services/authfake.service';
+import {environment} from '@environment/environment';
+import {CookieService} from 'ngx-cookie-service';
+import {LanguageService} from '@core/services/language.service';
+import {TranslateService} from '@ngx-translate/core';
+import {LOCAL_STORAGE_KEYS} from "@shared/auth/constants/storage.constants";
+import {IUser} from "@core/models/auth.models";
 
 @Component({
   selector: 'app-topbar',
@@ -25,7 +27,10 @@ export class TopbarComponent implements OnInit {
   countryName;
   valueset;
 
-  constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
+  public currentUser?: IUser;
+  constructor(@Inject(DOCUMENT) private document: any,
+              private router: Router,
+              private authService: AuthenticationService,
               private authFackservice: AuthfakeauthenticationService,
               public languageService: LanguageService,
               public translate: TranslateService,
@@ -46,10 +51,13 @@ export class TopbarComponent implements OnInit {
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   ngOnInit() {
+    // get current user
+    this.authService.user$.subscribe(user => this.currentUser = user);
+
     this.openMobileMenu = false;
     this.element = document.documentElement;
 
-    this.cookieValue = this._cookiesService.get('lang');
+    this.cookieValue = this._cookiesService.get(LOCAL_STORAGE_KEYS.LANG);
     const val = this.listLang.filter(x => x.lang === this.cookieValue);
     this.countryName = val.map(element => element.text);
     if (val.length === 0) {

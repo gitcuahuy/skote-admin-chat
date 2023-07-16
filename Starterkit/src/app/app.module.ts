@@ -20,6 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorInterceptor } from '@core/helpers/error.interceptor';
 import { JwtInterceptor } from '@core/helpers/jwt.interceptor';
 import { FakeBackendInterceptor } from '@core/helpers/fake-backend';
+import {AvatarModule} from "ngx-avatar";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -31,7 +32,7 @@ if (environment.defaultauth === 'firebase') {
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
-
+const avatarColors = ["#FFB6C1", "#2c3e50", "#95a5a6", "#f39c12", "#1abc9c"];
 @NgModule({
   declarations: [
     AppComponent
@@ -55,7 +56,10 @@ export function createTranslateLoader(http: HttpClient): any {
     NgbNavModule,
     NgbTooltipModule,
     ScrollToModule.forRoot(),
-    NgbModule
+    NgbModule,
+    AvatarModule.forRoot({
+      colors: avatarColors
+    })
   ],
   bootstrap: [AppComponent],
   providers: [

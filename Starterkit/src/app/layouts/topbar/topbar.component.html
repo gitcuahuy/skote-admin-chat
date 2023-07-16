@@ -355,9 +355,13 @@
       </div>
 
       <div class="dropdown d-inline-block" ngbDropdown>
-        <button type="button" class="btn header-item" ngbDropdownToggle id="page-header-user-dropdown">
-          <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
-          <span class="d-none d-xl-inline-block ms-1">Henry</span>
+        <button type="button" class="btn header-item d-inline-block" ngbDropdownToggle
+                id="page-header-user-dropdown">
+          <img class="rounded-circle header-profile-user"
+               src="{{this.currentUser?.avatarUrl || 'assets/images/users/avatar-1.jpg'}}" alt="Header Avatar">
+<!--          <ngx-avatar class="rounded-circle header-profile-user" size="36"  [name]="this.currentUser.fullName"-->
+<!--                      [value]="'assets/images/users/avatar-1.jpg'" ></ngx-avatar>-->
+          <span class="d-none d-xl-inline-block ms-1">{{this.currentUser?.fullName}}</span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
