@@ -16,7 +16,7 @@ export interface IUser extends BaseCredential, AuditableModel {
   longitude?: number;
 
   id?: string;
-  avatarFileId?: string;
+  // avatarFileId?: string;
   avatarUrl?: string;
   background?: string;
   fullName?: string;

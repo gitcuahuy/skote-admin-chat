@@ -22,6 +22,7 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
 
   constructor() {
     super();
+    console.log(this._user.value);
   }
 
   loginOauth(code: string, PARTNER_ID: string): Observable<AuthedResponse> {
@@ -102,7 +103,8 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
     return getFirebaseBackend().loginUser(data.username, data.password).pipe(
       switchMap(
         loginResponse => {
-          return fromPromise(firebase.firestore().doc(loginResponse.user?.uid).get({source: 'default'})).pipe(
+          return fromPromise(firebase.firestore().collection(FIRE_COLLECTION.users)
+            .doc(loginResponse.user?.uid).get({source: 'default'})).pipe(
             map((user) => {
               if (!user.exists) {
                 user.ref.set(CommonUtils.optimalObjectParams({
@@ -110,42 +112,59 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
                   avatarUrl: loginResponse.user?.photoURL ?? "",
                   emailVerified: loginResponse.user?.emailVerified ?? false,
                   fullName: loginResponse.user?.displayName ?? "",
+                  createdAt: new Date(),
                   deleted: false,
                 }));
               }
-              // const userData = user.data();
+              const userData = user.data();
+              if (loginResponse.user.emailVerified && !userData?.emailVerified) {
+                user.ref.update({emailVerified: true, lastLoginAt: new Date()});
+              } else {
+                user.ref.update({lastLoginAt: new Date()});
+              }
+              const userLoged: IUser = {
+                username: userData?.username ?? "",
+                email: userData?.email ?? "",
+                avatarUrl: userData?.photoURL ?? "",
+                fullName: userData?.fullName ?? "",
+                deleted: userData?.deleted ?? false,
+                createdAt: userData?.createdAt ?? new Date(),
+                emailVerified: userData?.emailVerified || loginResponse.user.emailVerified,
+                id: userData?.id ?? "",
+                address: userData?.address ?? "",
+                dayOfBirth: userData?.dayOfBirth ?? "",
+                lastLoginAt: userData?.lastLoginAt ?? new Date(),
+                departmentName: userData?.departmentName ?? "",
+                background: userData?.background ?? "",
+                description: userData?.description ?? "",
+                latitude: userData?.latitude ?? "",
+                longitude: userData?.longitude ?? "",
+                gender: userData?.gender ?? "",
+                roleIds: userData?.roleIds ?? [],
+                accountType: userData?.accountType ?? "",
+                title: userData?.title ?? "", // chức danh
+                phoneNumbers: userData?.phoneNumbers ?? "",
+                userLevel: userData?.userLevel ?? "",
+                organizationId: userData?.organizationId ?? "",
+                lastModifyAt: userData?.lastModifyAt ?? new Date(),
+                lastModifyBy: userData?.lastModifyBy ?? "",
+                createdBy: userData?.createdBy ?? "",
+                lastAuthChangeAt: userData?.lastAuthChangeAt ?? new Date(),
+              };
+              console.log(userLoged)
+              this.user = userLoged;
               const response: ILoginResponse = {
                 refreshToken: loginResponse.user?.refreshToken ?? "",
                 accessToken: "",
-
-                // fullName: userData?.fullName,
-                // avatarUrl: userData?.avatarUrl ?? loginResponse.user?.photoURL,
-                // id: loginResponse.user?.uid,
-                // description: userData?.description,
-                // gender: userData?.gender,
-                // username: userData?.username,
-                // status: userData?.status,
-                // dayOfBirth: userData?.dayOfBirth,
-                // accountType: userData?.accountType,
-                // departmentName: userData?.departmentName,
-                // address: userData?.address,
-                // userLevel: userData?.userLevel,
-                // avatarFileId: userData?.avatarFileId,
-                // lastLoginAt: userData?.lastLoginAt,
-                // title: userData?.title,
-                // emailVerified: userData?.emailVerified,
-                // background: userData?.background,
-                // userPrimary: userData?.userPrimary,
-                // deleted: userData?.deleted,
               }
-              user.ref.update({lastLoginAt: new Date()});
-              // this.user = response;
+
               return response;
             })
           )
         }
       ));
   }
+
   sendVerifyEmail(): Observable<void> {
     return getFirebaseBackend().sendEmailVerification();
   }
@@ -153,6 +172,7 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
   verifyAccount(code: string): Observable<void> {
     return getFirebaseBackend().verifyAccount(code);
   }
+
   /**
    * Performs the register
    * @param loginRequest RegisterUserRequest

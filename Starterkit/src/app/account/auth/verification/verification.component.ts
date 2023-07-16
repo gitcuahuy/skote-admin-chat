@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "@core/services/auth.service";
+import {Router} from "@angular/router";
+import {NgbToast} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-verification',
@@ -8,7 +10,9 @@ import {AuthenticationService} from "@core/services/auth.service";
 })
 export class VerificationComponent implements OnInit {
 
-  constructor(private authenticationService: AuthenticationService,) {
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router,
+  ) {
   }
 
   // set the currenr year
@@ -22,7 +26,13 @@ export class VerificationComponent implements OnInit {
   resendEmail(): void {
     this.authenticationService.sendVerifyEmail().subscribe(res => {
       console.log(res);
-    });
+      this.toLogin()
+    }, error => {
+      console.log(error);
+    })
   }
 
+  toLogin(): void {
+    this.router.navigate(['account/auth/login']);
+  }
 }

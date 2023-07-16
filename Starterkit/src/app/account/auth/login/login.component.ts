@@ -72,6 +72,7 @@ export class LoginComponent implements OnInit {
         }).subscribe(() => {
           this.router.navigate(['/dashboard']);
         }, (error) => {
+          console.log(error)
           this.error = error ? error : '';
         });
       } else {
