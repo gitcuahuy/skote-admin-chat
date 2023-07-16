@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
 import MetisMenu from 'metismenujs/dist/metismenujs';
-import { EventService } from '../../core/services/event.service';
+import { EventService } from '@core/services/event.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';

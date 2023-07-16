@@ -52,7 +52,6 @@ export abstract class BaseAuthService<T extends BaseCredential> {
   }
 
   set user(user: any | undefined) {
-    debugger
     this._user.next(user);
     if (user) {
       // this.localStorageService.store(LOCAL_STORAGE_KEYS.PROFILE, user);
