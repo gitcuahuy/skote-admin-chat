@@ -1,13 +1,13 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges} from '@angular/core';
 import MetisMenu from 'metismenujs/dist/metismenujs';
-import { EventService } from '@core/services/event.service';
-import { Router, NavigationEnd } from '@angular/router';
+import {EventService} from '@core/services/event.service';
+import {Router, NavigationEnd} from '@angular/router';
 
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
-import { TranslateService } from '@ngx-translate/core';
+import {MENU} from './menu';
+import {MenuItem} from './menu.model';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   menu: any;
   data: any;
 
-  menuItems = [];
+  menuItems: MenuItem[] = [];
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
@@ -61,14 +61,15 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       this.menu.dispose();
     }
   }
+
   _scrollElement() {
     setTimeout(() => {
       if (document.getElementsByClassName("mm-active").length > 0) {
         const currentPosition = document.getElementsByClassName("mm-active")[0]['offsetTop'];
         if (currentPosition > 500)
-        if(this.scrollRef.SimpleBar !== null)
-          this.scrollRef.SimpleBar.getScrollElement().scrollTop =
-            currentPosition + 300;
+          if (this.scrollRef.SimpleBar !== null)
+            this.scrollRef.SimpleBar.getScrollElement().scrollTop =
+              currentPosition + 300;
       }
     }, 300);
   }
@@ -117,8 +118,12 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
             parent3El.classList.add('mm-active');
             const childAnchor = parent3El.querySelector('.has-arrow');
             const childDropdown = parent3El.querySelector('.has-dropdown');
-            if (childAnchor) { childAnchor.classList.add('mm-active'); }
-            if (childDropdown) { childDropdown.classList.add('mm-active'); }
+            if (childAnchor) {
+              childAnchor.classList.add('mm-active');
+            }
+            if (childDropdown) {
+              childDropdown.classList.add('mm-active');
+            }
             const parent4El = parent3El.parentElement;
             if (parent4El && parent4El.id !== 'side-menu') {
               parent4El.classList.add('mm-show');
@@ -126,7 +131,9 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
               if (parent5El && parent5El.id !== 'side-menu') {
                 parent5El.classList.add('mm-active');
                 const childanchor = parent5El.querySelector('.is-parent');
-                if (childanchor && parent5El.id !== 'side-menu') { childanchor.classList.add('mm-active'); }
+                if (childanchor && parent5El.id !== 'side-menu') {
+                  childanchor.classList.add('mm-active');
+                }
               }
             }
           }
@@ -141,6 +148,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    */
   initialize(): void {
     this.menuItems = MENU;
+    console.log('menu item', this.menuItems)
   }
 
   /**
