@@ -73,7 +73,7 @@ const avatarColors = ["#FFB6C1", "#2c3e50", "#95a5a6", "#f39c12", "#1abc9c"];
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true},
+    // {provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true},
   ],
 })
 export class AppModule {
