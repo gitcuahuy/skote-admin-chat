@@ -5,8 +5,9 @@ import {EmployeesRoutingModule} from './employees-routing.module';
 import {SharedModule} from "@shared/shared.module";
 import {EmployeeListComponent} from './employee-list/employee-list.component';
 import {PermissionSettingListComponent} from './permission-setting-list/permission-setting-list.component';
-import { LeaveManagerListComponent } from './leave-manager-list/leave-manager-list.component';
-import { NotificationConfigrationComponent } from './notification-configration/notification-configration.component';
+import {LeaveManagerListComponent} from './leave-manager-list/leave-manager-list.component';
+import {NotificationConfigrationComponent} from './notification-configration/notification-configration.component';
+import {NzTableModule} from "ng-zorro-antd/table";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NotificationConfigrationComponent } from './notification-configration/n
   imports: [
     CommonModule,
     EmployeesRoutingModule,
-    SharedModule
+    SharedModule,
   ]
 })
-export class EmployeesModule { }
+export class EmployeesModule {
+}

@@ -40,6 +40,7 @@
     "ng-chartist": "^4.1.0",
     "ng-click-outside": "^8.0.0",
     "ng-otp-input": "^1.7.1",
+    "ng-zorro-antd": "^13.4.0",
     "ng5-slider": "^1.2.6",
     "ngx-avatar": "^4.1.0",
     "ngx-color-picker": "^11.0.0",

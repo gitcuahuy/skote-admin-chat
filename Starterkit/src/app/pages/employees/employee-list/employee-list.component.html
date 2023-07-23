@@ -1,86 +1,34 @@
 <div class="container-fluid">
   <app-page-title title="Danh sách nhân sự" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+<!--  filter start-->
   <div>
-    <div class="table-responsive">
-      <table id="basic-datatable"
-             class="table table-bordered dt-responsive nowrap datatables no-footer dtr-inline">
-        <thead>
+
+  </div>
+  <div>
+    <!-- Table -->
+    <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed">
+      <thead>
+      <tr>
+        <th nzWidth="60px"></th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let data of nzTable.data">
         <tr>
-          <th></th>
-          <th sortable="name">Mã nhân viên</th>
-          <th sortable="position" >Tên nhân viên</th>
-          <th sortable="office" >Phòng ban</th>
-          <th sortable="age" >thông tin liên lạc</th>
-          <th sortable="date" >Trạng thái nhân sự</th>
-          <th sortable="salary" >vai trò</th>
-          <th>Actions</th>
+          <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.age }}</td>
+          <td>{{ data.address }}</td>
         </tr>
-        </thead>
-        <tbody>
-<!--        <tr>-->
-<!--          <td align="center">-->
-<!--            <a class="expand-row" (click)="changeValue(i)">-->
-<!--              +-->
-<!--            </a>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <ngb-highlight [result]="table.name" [term]="service.searchTerm"></ngb-highlight>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <ngb-highlight [result]="table.position" [term]="service.searchTerm"></ngb-highlight>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <ngb-highlight [result]="table.office" [term]="service.searchTerm"></ngb-highlight>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <ngb-highlight [result]="table.age" [term]="service.searchTerm"></ngb-highlight>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <ngb-highlight [result]="table.date" [term]="service.searchTerm"></ngb-highlight>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <ngb-highlight [result]="table.salary" [term]="service.searchTerm"></ngb-highlight>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <div ngbDropdown placement="bottom-left">-->
-<!--              <i class="mdi mdi-dots-vertical dropdown-toggle" ngbDropdownToggle data-toggle="dropdown"-->
-<!--                 aria-expanded="true"></i>-->
-<!--              <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>-->
-<!--                <a class="dropdown-item" href="javascript: void(0);"><i class="mdi mdi-plus"></i>Add</a>-->
-<!--                <a class="dropdown-item" href="javascript: void(0);"><i-->
-<!--                  class="mdi mdi-account-edit"></i>Edit</a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </td>-->
-<!--        </tr>-->
-
-<!--        <tr *ngIf="!hideme[i]" class="sub-table no-bg">-->
-<!--          <td align="center"> </td>-->
-<!--          <td colspan="15" class="p-0">-->
-<!--            <table class="table mb-0 table-striped">-->
-<!--              <thead class="bg-dark text-white">-->
-<!--              <tr>-->
-<!--                <th>CountryName</th>-->
-<!--                <th>Price/Unit</th>-->
-<!--                <th>Sales Account</th>-->
-<!--                <th>Buy Account</th>-->
-
-<!--              </tr>-->
-<!--              </thead>-->
-<!--              <tbody>-->
-<!--              <tr *ngFor="let table of tables$ | async; let i = index">-->
-<!--                <td>{{table.name}}</td>-->
-<!--                <td>{{table.name}}</td>-->
-<!--                <td>{{table.name}}</td>-->
-<!--                <td>{{table.name}}</td>-->
-<!--              </tr>-->
-<!--              </tbody>-->
-<!--            </table>-->
-<!--          </td>-->
-<!--        </tr>-->
-        </tbody>
-      </table>
-    </div>
+        <tr [nzExpand]="expandSet.has(data.id)">
+          <span>{{ data.description }}</span>
+        </tr>
+      </ng-container>
+      </tbody>
+    </nz-table>
     <!-- End table -->
   </div>
 </div>

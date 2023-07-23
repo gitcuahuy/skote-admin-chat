@@ -23,6 +23,12 @@ import {FakeBackendInterceptor} from '@core/helpers/fake-backend';
 import {AvatarModule} from "ngx-avatar";
 import {FormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+
+registerLocaleData(en);
 // import {ToastrModule} from "ngx-toastr";
 
 if (environment.defaultauth === 'firebase') {
@@ -73,6 +79,7 @@ const avatarColors = ["#FFB6C1", "#2c3e50", "#95a5a6", "#f39c12", "#1abc9c"];
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    // { provide: NZ_I18N, useValue: en_US },
     // {provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true},
   ],
 })
