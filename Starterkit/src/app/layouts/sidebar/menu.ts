@@ -113,7 +113,7 @@ export const MENU: MenuItem[] = [
       {
         id: 15,
         label: 'Chính sách nghỉ phép',
-        link: '/ticket/policy',
+        link: ROUTER_CONSTANT.ticket.leavePolicy,
         parentId: 12
       },
       {
@@ -156,25 +156,25 @@ export const MENU: MenuItem[] = [
       {
         id: 22,
         label: 'Danh sách nhân sự',
-        link: '/',
+        link: ROUTER_CONSTANT.employees.listEmployee,
         parentId: 21
       },
       {
         id: 23,
         label: 'Quản lý vai trò',
-        link: '/',
+        link:  ROUTER_CONSTANT.employees.permissionSetting,
         parentId: 21
       },
       {
         id: 24,
         label: 'Quản lý nghỉ phép',
-        link: '/',
+        link:  ROUTER_CONSTANT.employees.leaveManager,
         parentId: 21
       },
       {
         id: 25,
         label: 'Cài nhận thông báo',
-        link: '/',
+        link:  ROUTER_CONSTANT.employees.notificationSetting,
         parentId: 21
       },
       // {

@@ -8,7 +8,6 @@ import {TranslateModule} from "@ngx-translate/core";
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {ClickOutsideModule} from "ng-click-outside";
 import {SimplebarAngularModule} from "simplebar-angular";
-import {AvatarSource} from "ngx-avatar";
 
 
 @NgModule({
