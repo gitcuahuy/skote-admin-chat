@@ -4,7 +4,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { AuthenticationService } from '../services/auth.service';
 import { AuthfakeauthenticationService } from '../services/authfake.service';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '@environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {

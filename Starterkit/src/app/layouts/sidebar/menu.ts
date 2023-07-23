@@ -1,4 +1,5 @@
 import {MenuItem} from './menu.model';
+import {ROUTER_CONSTANT} from "@shared/constants/router.constant";
 
 export const MENU: MenuItem[] = [
   {
@@ -100,31 +101,31 @@ export const MENU: MenuItem[] = [
       {
         id: 13,
         label: 'Danh sách đơn từ',
-        link: '/',
+        link: ROUTER_CONSTANT.ticket.list,
         parentId: 12
       },
       {
         id: 14,
         label: 'Thiết lập đơn từ',
-        link: '/',
+        link: ROUTER_CONSTANT.ticket.ticketType,
         parentId: 12
       },
       {
         id: 15,
         label: 'Chính sách nghỉ phép',
-        link: '/',
+        link: '/ticket/policy',
         parentId: 12
       },
       {
         id: 16,
         label: 'Quy trình duyệt đơn',
-        link: '/',
+        link: ROUTER_CONSTANT.ticket.configApproval,
         parentId: 12
       },
       {
         id: 17,
         label: 'Lý do tạo đơn',
-        link: '/',
+        link: ROUTER_CONSTANT.ticket.ticketReason,
         parentId: 12
       },
       // {
