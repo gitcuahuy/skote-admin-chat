@@ -23,10 +23,11 @@ import {FakeBackendInterceptor} from '@core/helpers/fake-backend';
 import {AvatarModule} from "ngx-avatar";
 import {FormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
-import { NZ_I18N } from 'ng-zorro-antd/i18n';
-import { en_US } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
+import {NZ_I18N, vi_VN} from 'ng-zorro-antd/i18n';
+import {en_US} from 'ng-zorro-antd/i18n';
+import {registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 registerLocaleData(en);
 // import {ToastrModule} from "ngx-toastr";
@@ -73,13 +74,14 @@ const avatarColors = ["#FFB6C1", "#2c3e50", "#95a5a6", "#f39c12", "#1abc9c"];
     }),
     BrowserModule,
     FormsModule,
+    NzIconModule,
     ToastrModule.forRoot({timeOut: 10000}), // ToastrModule added
   ],
   bootstrap: [AppComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    // { provide: NZ_I18N, useValue: en_US },
+    {provide: NZ_I18N, useValue: vi_VN},
     // {provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true},
   ],
 })

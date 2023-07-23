@@ -1,27 +1,64 @@
 <div class="container-fluid">
   <app-page-title title="Danh sách nhân sự" [breadcrumbItems]="breadCrumbItems"></app-page-title>
-<!--  filter start-->
+  <!--  filter start-->
   <div>
 
   </div>
   <div>
     <!-- Table -->
-    <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed">
+    <nz-table #nzTable
+              [nzData]="searchResult"
+              [nzVirtualItemSize]="54"
+              [nzFrontPagination]="false"
+              [nzShowPagination]="false"
+              [nzBordered]="true"
+              [nzVirtualForTrackBy]="trackByIndex"
+              [nzScroll]="{ x: '1000px', y: '440px' }"
+    >
       <thead>
       <tr>
         <th nzWidth="60px"></th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Address</th>
+        <th>Mã nhân viên</th>
+        <th>Tên nhân viên</th>
+        <th>Phòng ban</th>
+        <th>Thông tin liên lạc</th>
+        <th>Trạng thái nhân sự</th>
+        <th>Vai trò</th>
+        <th  nzWidth="80px" nzRight></th>
       </tr>
       </thead>
       <tbody>
       <ng-container *ngFor="let data of nzTable.data">
         <tr>
           <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.age }}</td>
-          <td>{{ data.address }}</td>
+          <td>{{ data?.code }}</td>
+          <td>{{ data?.fullName }}</td>
+          <td>{{ data?.departmentName }}</td>
+          <td>
+            <span>{{ data?.email }}</span> <br/>
+            <span>{{ data?.phoneNumber }}</span>
+          </td>
+          <td>
+            {{data.status}}
+          </td>
+          <td>
+            {{data?.role?.name}}
+          </td>
+          <td  nzWidth="80px" nzRight>
+            <button nz-button nzType="default" nzShape="circle"
+                    nz-dropdown [nzDropdownMenu]="menu"
+                    nzPlacement="bottomRight"
+            >
+              <span nz-icon nzType="ellipsis"
+                    nzTheme="outline"></span>
+            </button>
+            <nz-dropdown-menu #menu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="onDetail(data?.id)">Xem chi tiết</li>
+                <li nz-menu-item (click)="onUpdate(data?.id)"><span nz-icon nzType="edit" nzTheme="outline"></span>Cập nhật</li>
+              </ul>
+            </nz-dropdown-menu>
+          </td>
         </tr>
         <tr [nzExpand]="expandSet.has(data.id)">
           <span>{{ data.description }}</span>

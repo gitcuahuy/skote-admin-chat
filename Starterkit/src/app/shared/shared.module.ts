@@ -9,6 +9,8 @@ import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {ClickOutsideModule} from "ng-click-outside";
 import {SimplebarAngularModule} from "simplebar-angular";
 import {NzTableModule} from "ng-zorro-antd/table";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import {NzTableModule} from "ng-zorro-antd/table";
     WidgetModule,
     CommonModule,
     TranslateModule,
-    NzTableModule
+    NzTableModule,
+    NzButtonModule,
   ]
 })
 

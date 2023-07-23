@@ -13,6 +13,9 @@ export const ROUTER_PATH = {
   },
   employees: {
     listEmployee: 'list/index',
+    employeeDetail: 'list/:id/detail',
+    employeeUpdate: 'list/:id/update',
+    createEmployee: 'list/create',
     leaveManager: 'leave-management',
     permissionSetting: 'permission-setting',
     notificationSetting: 'notification-setting',
@@ -29,6 +32,11 @@ export const ROUTER_CONSTANT = {
   },
   employees: {
     listEmployee: `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.listEmployee}`,
+    detailEmployee: (id: string) => `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.employeeDetail.replace(':id', id)}`,
+    updateEmployee: (id: string) => `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.employeeUpdate.replace(':id', id)}`,
+    createEmployee: `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.createEmployee}`,
+
+
     leaveManager: `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.leaveManager}`,
     permissionSetting: `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.permissionSetting}`,
     notificationSetting: `${ROUTER_MODULE.employees}/${ROUTER_PATH.employees.notificationSetting}`,

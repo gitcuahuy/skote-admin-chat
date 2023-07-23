@@ -8,6 +8,11 @@ import {PermissionSettingListComponent} from './permission-setting-list/permissi
 import {LeaveManagerListComponent} from './leave-manager-list/leave-manager-list.component';
 import {NotificationConfigrationComponent} from './notification-configration/notification-configration.component';
 import {NzTableModule} from "ng-zorro-antd/table";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzIconModule} from "ng-zorro-antd/icon";
+import { EmployeeDetailComponent } from './employee-list/employee-detail/employee-detail.component';
+import { EmployeeUpdateComponent } from './employee-list/employee-update/employee-update.component';
+import {NzDropDownModule} from "ng-zorro-antd/dropdown";
 
 
 @NgModule({
@@ -15,12 +20,16 @@ import {NzTableModule} from "ng-zorro-antd/table";
     EmployeeListComponent,
     PermissionSettingListComponent,
     LeaveManagerListComponent,
-    NotificationConfigrationComponent
+    NotificationConfigrationComponent,
+    EmployeeDetailComponent,
+    EmployeeUpdateComponent
   ],
   imports: [
     CommonModule,
     EmployeesRoutingModule,
     SharedModule,
+    NzIconModule,
+    NzDropDownModule,
   ]
 })
 export class EmployeesModule {

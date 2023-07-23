@@ -1,5 +1,8 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {IUser} from "@core/models/auth.models";
+import {ActivatedRoute, Data, Router} from "@angular/router";
+import { UserProfileService } from '@core/services/user.service';
+import {ROUTER_CONSTANT} from "@shared/constants/router.constant";
 
 @Component({
   selector: 'app-employee-list',
@@ -12,6 +15,9 @@ export class EmployeeListComponent implements OnInit {
   searchResult: IUser[] = [];
 
   constructor(private cdr: ChangeDetectorRef,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private userService: UserProfileService
   ) {
     this.breadCrumbItems = [{label: 'Quản lý nhân sự'}, {label: 'danh sách nhân sự', active: true}];
   }
@@ -26,34 +32,47 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 
-  listOfData = [
-    {
-      id: 1,
-      name: 'John Brown',
-      age: 32,
-      expand: false,
-      address: 'New York No. 1 Lake Park',
-      description: 'My name is John Brown, I am 32 years old, living in New York No. 1 Lake Park.'
-    },
-    {
-      id: 2,
-      name: 'Jim Green',
-      age: 42,
-      expand: false,
-      address: 'London No. 1 Lake Park',
-      description: 'My name is Jim Green, I am 42 years old, living in London No. 1 Lake Park.'
-    },
-    {
-      id: 3,
-      name: 'Joe Black',
-      age: 32,
-      expand: false,
-      address: 'Sidney No. 1 Lake Park',
-      description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
-    }
-  ];
-
   ngOnInit(): void {
+    this.onSearch()
   }
 
+  // =========== FETCH DATA ==============
+  onSearch(keyword?: string) {
+    this.userService.search({keyword}).subscribe((data) => {
+      this.searchResult = data;
+      console.log('searchResult', this.searchResult )
+      this.cdr.detectChanges()
+    })
+  }
+  onCurrentPageDataChange(listOfCurrentPageData: readonly Data[]): void {
+    console.log(listOfCurrentPageData)
+  }
+  // =========== HANDLE ACTIONS ==============
+  onDetail(id?: string): void {
+    console.log('onDetail', id)
+    if (!id) {
+      console.warn('id is null')
+      return;
+    }
+    this.router.navigate([ROUTER_CONSTANT.employees.detailEmployee(id)])
+  }
+
+  onUpdate(id?: string): void {
+    console.log('onUpdate', id)
+    if (!id) {
+      console.warn('id is null')
+      return;
+    }
+    this.router.navigate([ROUTER_CONSTANT.employees.updateEmployee(id)])
+  }
+
+  onCreate(): void {
+    console.log('onCreate')
+    this.router.navigate([ROUTER_CONSTANT.employees.createEmployee])
+  }
+  // =========== UTILS ==============
+
+  trackByIndex(_: number, data: IUser): string {
+    return data.id;
+  }
 }

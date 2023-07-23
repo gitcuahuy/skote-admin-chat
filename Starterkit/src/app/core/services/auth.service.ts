@@ -143,7 +143,7 @@ export class AuthenticationService extends BaseAuthService<IUser> implements IAu
                 roleIds: userData?.roleIds ?? [],
                 accountType: userData?.accountType ?? "",
                 title: userData?.title ?? "", // chức danh
-                phoneNumbers: userData?.phoneNumbers ?? "",
+                phoneNumber: userData?.phoneNumber ?? "",
                 userLevel: userData?.userLevel ?? "",
                 organizationId: userData?.organizationId ?? "",
                 lastModifyAt: userData?.lastModifyAt ?? new Date(),

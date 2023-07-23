@@ -14,17 +14,17 @@ export interface IUser extends BaseCredential, AuditableModel {
   departmentName?: string;
   latitude?: number;
   longitude?: number;
-
+  code?: string;
   id?: string;
   // avatarFileId?: string;
   avatarUrl?: string;
   background?: string;
   fullName?: string;
   username?: string;
-  roles?: IRole[];
+  role?: IRole;
   email?: string;
   emailVerified?: boolean;
-  phoneNumbers?: string;
+  phoneNumber?: string;
   title?: string;
   organizationId?: string;
   dayOfBirth?: Date;
@@ -46,17 +46,17 @@ export class User implements  IUser{
   departmentName?: string;
   latitude?: number;
   longitude?: number;
-
+  code?: string;
   id?: string;
   avatarFileId?: string;
   avatarUrl?: string;
   background?: string;
   fullName?: string;
   username?: string;
-  roles?: IRole[];
-  emails?: string;
+  role?: IRole;
+  email?: string;
   emailVerified?: boolean;
-  phoneNumbers?: string;
+  phoneNumber?: string;
   title?: string;
   organizationId?: string;
   dayOfBirth?: Date;
