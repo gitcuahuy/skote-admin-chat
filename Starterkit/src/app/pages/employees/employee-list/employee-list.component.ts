@@ -6,8 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
-
-  constructor() { }
+  // bread crumb items
+ readonly breadCrumbItems: Array<{}>;
+  constructor() {
+    this.breadCrumbItems = [{ label: 'Quản lý nhân sự' }, { label: 'danh sách nhân sự', active: true }];
+  }
 
   ngOnInit(): void {
   }
