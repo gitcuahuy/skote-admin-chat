@@ -8,13 +8,16 @@ import {IUser} from "@core/models/auth.models";
 })
 export class EmployeeListComponent implements OnInit {
   // bread crumb items
- readonly breadCrumbItems: Array<{}>;
- searchResult: IUser[] = [];
+  readonly breadCrumbItems: Array<{}>;
+  searchResult: IUser[] = [];
+
   constructor(private cdr: ChangeDetectorRef,
-              ) {
-    this.breadCrumbItems = [{ label: 'Quản lý nhân sự' }, { label: 'danh sách nhân sự', active: true }];
+  ) {
+    this.breadCrumbItems = [{label: 'Quản lý nhân sự'}, {label: 'danh sách nhân sự', active: true}];
   }
+
   expandSet = new Set<number>();
+
   onExpandChange(id: number, checked: boolean): void {
     if (checked) {
       this.expandSet.add(id);
@@ -22,6 +25,7 @@ export class EmployeeListComponent implements OnInit {
       this.expandSet.delete(id);
     }
   }
+
   listOfData = [
     {
       id: 1,
@@ -48,6 +52,7 @@ export class EmployeeListComponent implements OnInit {
       description: 'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'
     }
   ];
+
   ngOnInit(): void {
   }
 
