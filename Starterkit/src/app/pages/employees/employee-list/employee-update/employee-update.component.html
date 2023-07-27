@@ -1,1 +1,100 @@
-<p>employee-update works!</p>
+<div class="container-fluid">
+  <app-page-title title="Cập nhật thông tin nhân sự" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <!--  filter start-->
+  <div>
+
+  </div>
+  <div>
+    <!--  avatar row  -->
+    <div>
+      <div nz-row nzJustify="start" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col nzSpan="8">
+          <div class="avatar">
+            <img src="assets/images/users/avatar-1.jpg" alt="">
+          </div>
+        </div>
+        <div nz-col nzSpan="8">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <label for="fullName">Họ và tên <span class="text-danger">*</span></label>
+              <input nz-input id="fullName" placeholder="Nhập họ và tên">
+            </div>
+          </div>
+
+          <!--          Số diện thoại -->
+          <div nz-row class="mt-3">
+            <div nz-col nzSpan="24">
+              <label for="phomNumber">Số điện thoại</label>
+              <input nz-input id="phomNumber" placeholder="Nhập họ và tên">
+            </div>
+          </div>
+          <!--       Email công ty   -->
+          <div nz-row class="mt-3">
+            <div nz-col nzSpan="24">
+              <label for="work_email">Email công ty</label>
+              <input nz-input id="work_email" placeholder="Nhập email công ty">
+            </div>
+          </div>
+
+        </div>
+        <div nz-col nzSpan="8">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <label for="gender">Giới tính </label>
+              <input nz-input id="gender" placeholder="Nhập họ và tên">
+            </div>
+          </div>
+          <div nz-row class="mt-3">
+            <div nz-col nzSpan="24">
+              <label for="dob">Ngày sinh </label>
+              <nz-date-picker
+                id="dob"
+                class="w-100"
+                [nzSize]="'large'"
+                nzFormat="dd/MM/yyyy"
+              >
+              </nz-date-picker>
+            </div>
+          </div>
+
+          <div nz-row class="mt-3">
+            <div nz-col nzSpan="24">
+              <label for="personal_email">Email cá nhân</label>
+              <input nz-input id="personal_email" placeholder="Nhập email cá nhân">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!--  Thông tin cá nhân-->
+      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" >
+        <div nz-col nzSpan="8">
+          <label for="identity_number">Số CCCD/CMND/Hộ chiếu</label>
+          <input  nz-input id="identity_number" placeholder="Nhập Số CCCD/CMND/Hộ chiếu" />
+        </div>
+
+        <div nz-col nzSpan="8">
+          <label for="provice">Nơi cấp</label>
+          <input  nz-input id="provice" placeholder="Nhập nơi cấp" />
+        </div>
+
+        <div nz-col nzSpan="8">
+          <label for="supply_date">Ngày cấp</label>
+          <nz-date-picker
+            id="supply_date"
+            class="w-100"
+            nzFormat="dd/MM/yyyy"
+            [nzSize]="'large'"
+          >
+          </nz-date-picker>
+        </div>
+      </div>
+<!--Địa chỉ  -->
+      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" >
+      </div>
+
+    </div>
+  </div>
+</div>
+

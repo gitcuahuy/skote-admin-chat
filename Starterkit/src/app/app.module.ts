@@ -24,13 +24,11 @@ import {AvatarModule} from "ngx-avatar";
 import {FormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import {NZ_I18N, vi_VN} from 'ng-zorro-antd/i18n';
-import {en_US} from 'ng-zorro-antd/i18n';
 import {registerLocaleData} from '@angular/common';
-import en from '@angular/common/locales/en';
+import vi from '@angular/common/locales/vi';
 import {NzIconModule} from "ng-zorro-antd/icon";
 
-registerLocaleData(en);
-// import {ToastrModule} from "ngx-toastr";
+registerLocaleData(vi);
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);

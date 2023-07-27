@@ -31,18 +31,18 @@
       <ng-container *ngFor="let data of nzTable.data">
         <tr>
           <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
-          <td>{{ data?.code }}</td>
-          <td>{{ data?.fullName }}</td>
-          <td>{{ data?.departmentName }}</td>
+          <td>{{ data?.code | nzSafeNull: '-'  }}</td>
+          <td>{{ data?.fullName | nzSafeNull: '-' }}</td>
+          <td>{{ data?.departmentName | nzSafeNull: '-' }}</td>
           <td>
-            <span>{{ data?.email }}</span> <br/>
-            <span>{{ data?.phoneNumber }}</span>
+            <span>{{ data?.email | nzSafeNull: '-' }}</span> <br/>
+            <span>{{ data?.phoneNumber | nzSafeNull: '-' }}</span>
           </td>
           <td>
-            {{data.status}}
+            {{data.status | nzSafeNull: '-'}}
           </td>
           <td>
-            {{data?.role?.name}}
+            {{data?.role?.name | nzSafeNull: '-'}}
           </td>
           <td  nzWidth="80px" nzRight>
             <button nz-button nzType="default" nzShape="circle"
@@ -54,8 +54,10 @@
             </button>
             <nz-dropdown-menu #menu="nzDropdownMenu">
               <ul nz-menu>
-                <li nz-menu-item (click)="onDetail(data?.id)">Xem chi tiết</li>
-                <li nz-menu-item (click)="onUpdate(data?.id)"><span nz-icon nzType="edit" nzTheme="outline"></span>Cập nhật</li>
+                <li nz-menu-item (click)="onDetail(data?.id)">
+                  <span nz-icon nzType="eye" nzTheme="outline"></span>Xem chi tiết</li>
+                <li nz-menu-item (click)="onUpdate(data?.id)">
+                  <span nz-icon nzType="edit" nzTheme="outline"></span>Cập nhật</li>
               </ul>
             </nz-dropdown-menu>
           </td>

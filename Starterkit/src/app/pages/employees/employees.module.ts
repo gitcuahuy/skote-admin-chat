@@ -13,6 +13,11 @@ import {NzIconModule} from "ng-zorro-antd/icon";
 import { EmployeeDetailComponent } from './employee-list/employee-detail/employee-detail.component';
 import { EmployeeUpdateComponent } from './employee-list/employee-update/employee-update.component';
 import {NzDropDownModule} from "ng-zorro-antd/dropdown";
+import {NzPipesModule} from "ng-zorro-antd/pipes";
+import {NzFormModule} from "ng-zorro-antd/form";
+import {NzInputModule} from "ng-zorro-antd/input";
+import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
+import {NZ_I18N, vi_VN} from "ng-zorro-antd/i18n";
 
 
 @NgModule({
@@ -28,8 +33,9 @@ import {NzDropDownModule} from "ng-zorro-antd/dropdown";
     CommonModule,
     EmployeesRoutingModule,
     SharedModule,
-    NzIconModule,
-    NzDropDownModule,
+  ],
+  providers: [
+    {provide: NZ_I18N, useValue: vi_VN},
   ]
 })
 export class EmployeesModule {
