@@ -9,11 +9,31 @@
     <div>
       <div nz-row nzJustify="start" [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
         <div nz-col nzSpan="8">
-          <div class="avatar">
-            <img src="assets/images/users/avatar-1.jpg" alt="">
+          <div class="d-flex justify-content-center">
+            <!-- content           -->
+            <div class="avatar-box">
+<!--              <img class="avatar-img" src="assets/images/users/avatar-1.jpg" alt="avatar img">-->
+<!--              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" class="svg-inline&#45;&#45;fa fa-user fa-w-14 " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"></path></svg>-->
+              <img  nz-image class="avatar-img"  [nzSrc]="getAvatarUrl()" [nzPlaceholder]="avatarPlaceholder" />
+<!--              nzFileType="image/png, image/jpeg, image/gif, image/jpg"-->
+<!--              [nzMultiple]="false"-->
+<!--              [nzOpenFileDialogOnClick]="true"-->
+              <div class="mt-2">
+                <nz-upload
+                  nzListType="picture"
+                  [(nzFileList)]="avatar"
+                  [nzShowUploadList]="false"
+                >
+                  <button nz-button class="w-100">
+                    <span nz-icon nzType="upload"></span>
+                    Đổi ảnh đại diện
+                  </button>
+                </nz-upload>
+              </div>
+            </div>
           </div>
         </div>
-        <div nz-col nzSpan="8">
+        <div nz-col nzSpan="8" class="mt-3">
           <div nz-row>
             <div nz-col nzSpan="24">
               <label for="fullName">Họ và tên <span class="text-danger">*</span></label>
@@ -68,15 +88,15 @@
       </div>
 
       <!--  Thông tin cá nhân-->
-      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" >
+      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
         <div nz-col nzSpan="8">
           <label for="identity_number">Số CCCD/CMND/Hộ chiếu</label>
-          <input  nz-input id="identity_number" placeholder="Nhập Số CCCD/CMND/Hộ chiếu" />
+          <input nz-input id="identity_number" placeholder="Nhập Số CCCD/CMND/Hộ chiếu"/>
         </div>
 
         <div nz-col nzSpan="8">
           <label for="provice">Nơi cấp</label>
-          <input  nz-input id="provice" placeholder="Nhập nơi cấp" />
+          <input nz-input id="provice" placeholder="Nhập nơi cấp"/>
         </div>
 
         <div nz-col nzSpan="8">
@@ -90,10 +110,50 @@
           </nz-date-picker>
         </div>
       </div>
-<!--Địa chỉ  -->
-      <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }" >
-      </div>
+      <!--Địa chỉ  -->
+      <div class="mt-3" nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col nzSpan="8">
+          <label for="shelter">Địa chỉ tạm trú</label>
+          <input nz-input id="shelter" placeholder="Nhập địa chỉ tạm trú"/>
+        </div>
 
+        <div nz-col nzSpan="8">
+          <label for="place-of-residence">Địa chỉ thường chú</label>
+          <input nz-input id="place-of-residence" placeholder="Nhập địa chỉ thường chú"/>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <label for="tax-code">Mã số thuế cá nhân</label>
+          <input nz-input id="tax-code" placeholder="Nhập mã số thuế cá nhân "/>
+        </div>
+      </div>
+      <!-- học vấn  -->
+      <div class="mt-3" nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+        <div nz-col nzSpan="8">
+          <label for="shelter"> Học vấn </label>
+          <input nz-input id="education" placeholder="Nhập học vấn"/>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <label for="school">Trường học </label>
+          <input nz-input id="school" placeholder="Nhập trường học"/>
+        </div>
+
+        <div nz-col nzSpan="8">
+          <label for="major">Chuyên ngành</label>
+          <input nz-input id="major" placeholder="Nhập chuyên ngành "/>
+        </div>
+
+        <div nz-col nzSpan="8" class="mt-3">
+          <label for="graduation-year">Năm tốt nghiệp</label>
+          <input nz-input id="graduation-year" placeholder="Nhập năm tốt nghiệp "/>
+        </div>
+
+        <div nz-col nzSpan="8" class="mt-3">
+          <label for="marital-status">Tình trạng hôn nhân</label>
+          <input nz-input id="marital-status" placeholder="Nhập tình trạng hôn nhân "/>
+        </div>
+      </div>
     </div>
   </div>
 </div>

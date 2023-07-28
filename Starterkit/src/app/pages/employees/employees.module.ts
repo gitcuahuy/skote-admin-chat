@@ -18,6 +18,10 @@ import {NzFormModule} from "ng-zorro-antd/form";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NZ_I18N, vi_VN} from "ng-zorro-antd/i18n";
+import {NzUploadModule} from "ng-zorro-antd/upload";
+import {NzSpaceModule} from "ng-zorro-antd/space";
+import {NzImageModule} from "ng-zorro-antd/image";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -33,6 +37,10 @@ import {NZ_I18N, vi_VN} from "ng-zorro-antd/i18n";
     CommonModule,
     EmployeesRoutingModule,
     SharedModule,
+    NzUploadModule,
+    NzSpaceModule,
+    NzImageModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {provide: NZ_I18N, useValue: vi_VN},

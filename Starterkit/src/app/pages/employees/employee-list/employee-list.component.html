@@ -1,8 +1,14 @@
 <div class="container-fluid">
   <app-page-title title="Danh sách nhân sự" [breadcrumbItems]="breadCrumbItems"></app-page-title>
   <!--  filter start-->
-  <div>
-
+  <div class="row" [formGroup]="this.searchForm">
+    <div class="col-3">
+      <label for="keyword">Từ khoá tìm kiếm</label>
+      <input [formControlName]="FORM_FIELDS.keyword" nz-input id="keyword" placeholder="Tìm kiếm họ và tên">
+    </div>
+    <div class="col-3 align-items-end">
+      <button nz-button nzType="default" (click)="onCreateIndex()">Đánh index </button>
+    </div>
   </div>
   <div>
     <!-- Table -->
@@ -24,7 +30,7 @@
         <th>Thông tin liên lạc</th>
         <th>Trạng thái nhân sự</th>
         <th>Vai trò</th>
-        <th  nzWidth="80px" nzRight></th>
+        <th nzWidth="80px" nzRight></th>
       </tr>
       </thead>
       <tbody>
@@ -44,7 +50,7 @@
           <td>
             {{data?.role?.name | nzSafeNull: '-'}}
           </td>
-          <td  nzWidth="80px" nzRight>
+          <td nzWidth="80px" nzRight>
             <button nz-button nzType="default" nzShape="circle"
                     nz-dropdown [nzDropdownMenu]="menu"
                     nzPlacement="bottomRight"
@@ -55,9 +61,11 @@
             <nz-dropdown-menu #menu="nzDropdownMenu">
               <ul nz-menu>
                 <li nz-menu-item (click)="onDetail(data?.id)">
-                  <span nz-icon nzType="eye" nzTheme="outline"></span>Xem chi tiết</li>
+                  <span nz-icon nzType="eye" nzTheme="outline"></span>Xem chi tiết
+                </li>
                 <li nz-menu-item (click)="onUpdate(data?.id)">
-                  <span nz-icon nzType="edit" nzTheme="outline"></span>Cập nhật</li>
+                  <span nz-icon nzType="edit" nzTheme="outline"></span>Cập nhật
+                </li>
               </ul>
             </nz-dropdown-menu>
           </td>

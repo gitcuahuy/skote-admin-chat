@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-
 import {IUser, User} from '../models/auth.models';
-import {Observable} from "rxjs";
+import {EMPTY, Observable, of} from "rxjs";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
 import {fromPromise} from "rxjs/internal-compatibility";
-import {map} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
 import {ISearchWithPaginationOptionally} from "@shared/models/base-request.model";
-import {STRING_POOL} from "@shared/constants/stringpool.constants";
 import firebase from "firebase";
+import CommonUtils from "@shared/utils/CommonUtils";
 
 @Injectable({providedIn: 'root'})
 export class UserProfileService {
@@ -33,34 +32,39 @@ export class UserProfileService {
   }
 
   search(request?: ISearchWithPaginationOptionally): Observable<IUser[]> {
-    // create query search with pagination firestore
-    // let query = this.firestore.collection(FIRE_COLLECTION.users).ref
-    //   .orderBy('createdAt', 'desc')
-    //   .limit(request?.pageSize || 10)
-    //   .startAfter(request?.pageIndex || 0)
-    // if (request?.keyword) {
-    //   const keywords = request.keyword.toLowerCase().split(STRING_POOL.SPACE)
-    //   query = query.where('fullName', 'array-contains', keywords)
-    // }
-    // return fromPromise(query.get()).pipe(map((snapshot) => {
-    //   const data: IUser[] = snapshot.docs.map(doc => doc.data())
-    //   console.log('data', data);
-    //   return data
-    // }))
-    let query = firebase.firestore().collection(FIRE_COLLECTION.users)
-      // .orderBy('createdAt', 'desc')
-      .limit(request?.pageSize || 10)
-      // .startAfter(request?.pageIndex || 0)
-    // if (request?.keyword) {
-    //   const keywords = request.keyword.toLowerCase().split(STRING_POOL.SPACE)
-    //   query = query.where('fullName', 'array-contains', keywords)
-    // }
+    let query: firebase.firestore.Query<firebase.firestore.DocumentData> = firebase.firestore().collection(FIRE_COLLECTION.users)
+      .orderBy('search_fullName', 'desc')
+    if (request.keyword) {
+      const keyword = CommonUtils.removeAccents(request.keyword).toLowerCase();
+      // query = query.where('search_fullName', '>=', keyword)
+      //   .where('search_fullName', '<=', keyword + '\uf8ff')
+      query = query.where('search_partials', 'array-contains', keyword)
+    }
+    query = query.limit(request?.pageSize || 10)
     console.log('query', query)
     return fromPromise(query.get()).pipe(map((snapshot) => {
       console.log('snapshot', snapshot)
       const data: IUser[] = snapshot.docs.map(doc => doc.data())
       console.log('data', data);
       return data
-    }))
+    }), take(1))
+  }
+
+  createIndex(): Observable<any> {
+    const batch = fromPromise(firebase.firestore().collection(FIRE_COLLECTION.users)
+      .get())
+      .pipe(map((snapshot) => {
+        snapshot.docs.map((doc) => {
+          const data: IUser = doc.data()
+          data.search_fullName = CommonUtils.removeAccents(data.fullName?.toLowerCase())
+          data.search_partials = CommonUtils.partialSearchField(data.fullName?.toLowerCase())
+          console.log('data', data)
+          firebase.firestore().collection(FIRE_COLLECTION.users).doc(doc.id).update({
+            search_fullName: data.search_fullName,
+            search_partials: data.search_partials,
+          })
+        })
+      }))
+    return batch
   }
 }
