@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IUser, User} from '../models/auth.models';
-import {EMPTY, Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
 import {fromPromise} from "rxjs/internal-compatibility";
 import {map, take} from "rxjs/operators";
 import {ISearchWithPaginationOptionally} from "@shared/models/base-request.model";
 import firebase from "firebase";
 import CommonUtils from "@shared/utils/CommonUtils";
-import {collection, query} from "@angular/fire/firestore";
 
 @Injectable({providedIn: 'root'})
 export class UserProfileService {
