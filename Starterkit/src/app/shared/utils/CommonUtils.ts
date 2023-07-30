@@ -82,22 +82,23 @@ export default class CommonUtils {
   static clearItem(key: string): void {
     localStorage.removeItem(key);
   }
+
   // For example:
 // generateSearchIndex("Nguyen Xuan Son")
 // returns ["Ngu", "Nguy", "Nguye", "Nguyen", "Xua", "Xuan", "Son"]
 
   static partialSearchField(title: string): string[] {
     title = CommonUtils.removeAccents(title).toLowerCase();
-    let temp:string[] = []
-     title.trim().split(' ').forEach(word => {
+    let temp: string[] = []
+    const data: string[] = title.trim().split(' ');
+    data.shift();
+    data.forEach(word => {
       temp = temp.concat(CommonUtils.generateSearchIndexWord(word))
-     })
+    })
     return temp
     // titlePartials.shift();
     // return titlePartials.filter((item) => !!item);
   }
-
-
 
 
   static generateSearchIndexWord(word: string): string[] {
@@ -107,7 +108,7 @@ export default class CommonUtils {
       return [word]
     } else {
       const ret = [];
-      for (let i = 3 ; i <= word.length ; i++) {
+      for (let i = 3; i <= word.length; i++) {
         ret.push(word.substring(0, i))
       }
       return ret

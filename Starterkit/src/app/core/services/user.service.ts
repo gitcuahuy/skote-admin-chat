@@ -8,6 +8,7 @@ import {map, take} from "rxjs/operators";
 import {ISearchWithPaginationOptionally} from "@shared/models/base-request.model";
 import firebase from "firebase";
 import CommonUtils from "@shared/utils/CommonUtils";
+import {collection, query} from "@angular/fire/firestore";
 
 @Injectable({providedIn: 'root'})
 export class UserProfileService {
@@ -39,8 +40,15 @@ export class UserProfileService {
       // query = query.where('search_fullName', '>=', keyword)
       //   .where('search_fullName', '<=', keyword + '\uf8ff')
       query = query.where('search_partials', 'array-contains', keyword)
+      //   search with or condition
+
     }
-    query = query.limit(request?.pageSize || 10)
+    const pageSize = request?.pageSize ?? 10;
+    const pageIndex = request?.pageIndex ?? 0;
+
+
+    // query = query.startAfter(pageIndex * pageSize).limit(pageSize)
+
     console.log('query', query)
     return fromPromise(query.get()).pipe(map((snapshot) => {
       console.log('snapshot', snapshot)
