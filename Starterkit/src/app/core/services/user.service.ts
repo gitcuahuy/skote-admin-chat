@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IUser, User} from '../models/auth.models';
-import {Observable} from "rxjs";
+import {forkJoin, Observable, of} from "rxjs";
 import {FIRE_COLLECTION} from "@shared/auth/constants/document.constants";
 import {fromPromise} from "rxjs/internal-compatibility";
-import {map, take} from "rxjs/operators";
+import {filter, map, take} from "rxjs/operators";
 import {ISearchWithPaginationOptionally} from "@shared/models/base-request.model";
 import firebase from "firebase";
 import CommonUtils from "@shared/utils/CommonUtils";
@@ -33,28 +33,36 @@ export class UserProfileService {
 
   search(request?: ISearchWithPaginationOptionally): Observable<IUser[]> {
     let query: firebase.firestore.Query<firebase.firestore.DocumentData> = firebase.firestore().collection(FIRE_COLLECTION.users)
-      .orderBy('search_fullName', 'desc')
+      .orderBy('search_fullName', 'desc');
+    let obs2: Observable<IUser[]> = of([]);
     if (request.keyword) {
       const keyword = CommonUtils.removeAccents(request.keyword).toLowerCase();
-      // query = query.where('search_fullName', '>=', keyword)
-      //   .where('search_fullName', '<=', keyword + '\uf8ff')
       query = query.where('search_partials', 'array-contains', keyword)
-      //   search with or condition
 
+      const query2: firebase.firestore.Query<firebase.firestore.DocumentData> = firebase.firestore().collection(FIRE_COLLECTION.users)
+        .orderBy('search_fullName', 'desc')
+        .where('search_fullName', '>=', keyword)
+        .where('search_fullName', '<=', keyword + '\uf8ff');
+
+      obs2 = fromPromise(query2.get()).pipe(map((snapshot) => {
+        const data: IUser[] = snapshot.docs.map(doc => doc.data())
+        return data
+      }), take(1))
     }
-    const pageSize = request?.pageSize ?? 10;
-    const pageIndex = request?.pageIndex ?? 0;
-
+    // const pageSize = request?.pageSize ?? 10;
+    // const pageIndex = request?.pageIndex ?? 0;
 
     // query = query.startAfter(pageIndex * pageSize).limit(pageSize)
-
-    console.log('query', query)
-    return fromPromise(query.get()).pipe(map((snapshot) => {
-      console.log('snapshot', snapshot)
+    const obs1 = fromPromise(query.get()).pipe(map((snapshot) => {
       const data: IUser[] = snapshot.docs.map(doc => doc.data())
-      console.log('data', data);
       return data
     }), take(1))
+
+    return forkJoin([obs1, obs2]).pipe(map(([data1, data2]) => {
+      const data = data1.concat(data2);
+      console.log('data', data);
+      return data
+    }))
   }
 
   createIndex(): Observable<any> {

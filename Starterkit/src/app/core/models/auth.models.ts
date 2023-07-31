@@ -72,6 +72,8 @@ export class User implements  IUser{
   search_partials?: string[];
   constructor(user?: IUser) {
     Object.assign(this, user);
+    this.search_fullName = CommonUtils.removeAccents(this.fullName || '');
+    this.search_partials = CommonUtils.partialSearchField(this.search_fullName);
   }
 }
 export interface ILoginResponse extends AuthedResponse, IUser {

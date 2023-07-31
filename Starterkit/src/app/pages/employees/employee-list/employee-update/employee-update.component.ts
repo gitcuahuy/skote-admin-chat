@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NzUploadFile} from "ng-zorro-antd/upload";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UserProfileService} from "@core/services/user.service";
+import {User} from "@core/models/auth.models";
 
 export const USER_FORM_FIELDS = {
   fullName: 'fullName',
@@ -25,6 +26,7 @@ export class EmployeeUpdateComponent implements OnInit {
   readonly breadCrumbItems = [{label: 'Quản lý nhân sự'}, {label: 'danh sách nhân sự', active: true}];
   readonly avatarPlaceholder = 'assets/images/users/Profile_avatar_placeholder_large.png';
   avatar: NzUploadFile[] = [];
+  domainData: User[] = [];
   formHandler?: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -34,8 +36,10 @@ export class EmployeeUpdateComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  initForm(): void {
-    this.formHandler = this.fb.group({})
+  initForm(data?: User): void {
+    this.formHandler = this.fb.group({
+
+    })
   }
 
 //   UTILS
